@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HideAndSeek", "HideAndSeek\HideAndSeek.csproj", "{B160F53D-B8D5-4788-9A0C-8AA8F46F2283}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{22624E42-E093-4185-8AA6-55EFB54307A1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B160F53D-B8D5-4788-9A0C-8AA8F46F2283}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B160F53D-B8D5-4788-9A0C-8AA8F46F2283}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B160F53D-B8D5-4788-9A0C-8AA8F46F2283}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B160F53D-B8D5-4788-9A0C-8AA8F46F2283}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22624E42-E093-4185-8AA6-55EFB54307A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22624E42-E093-4185-8AA6-55EFB54307A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22624E42-E093-4185-8AA6-55EFB54307A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22624E42-E093-4185-8AA6-55EFB54307A1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E2A68FD8-7619-472F-8607-FEC6D73531D7}
+	EndGlobalSection
+EndGlobal

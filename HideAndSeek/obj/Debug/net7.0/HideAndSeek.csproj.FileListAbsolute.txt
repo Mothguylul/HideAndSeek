@@ -1,0 +1,14 @@
+C:\Code\HideAndSeek\HideAndSeek\obj\Debug\net7.0\HideAndSeek.GeneratedMSBuildEditorConfig.editorconfig
+C:\Code\HideAndSeek\HideAndSeek\obj\Debug\net7.0\HideAndSeek.AssemblyInfoInputs.cache
+C:\Code\HideAndSeek\HideAndSeek\obj\Debug\net7.0\HideAndSeek.AssemblyInfo.cs
+C:\Code\HideAndSeek\HideAndSeek\obj\Debug\net7.0\HideAndSeek.csproj.CoreCompileInputs.cache
+C:\Code\HideAndSeek\HideAndSeek\bin\Debug\net7.0\HideAndSeek.exe
+C:\Code\HideAndSeek\HideAndSeek\bin\Debug\net7.0\HideAndSeek.deps.json
+C:\Code\HideAndSeek\HideAndSeek\bin\Debug\net7.0\HideAndSeek.runtimeconfig.json
+C:\Code\HideAndSeek\HideAndSeek\bin\Debug\net7.0\HideAndSeek.dll
+C:\Code\HideAndSeek\HideAndSeek\bin\Debug\net7.0\HideAndSeek.pdb
+C:\Code\HideAndSeek\HideAndSeek\obj\Debug\net7.0\HideAndSeek.dll
+C:\Code\HideAndSeek\HideAndSeek\obj\Debug\net7.0\refint\HideAndSeek.dll
+C:\Code\HideAndSeek\HideAndSeek\obj\Debug\net7.0\HideAndSeek.pdb
+C:\Code\HideAndSeek\HideAndSeek\obj\Debug\net7.0\HideAndSeek.genruntimeconfig.cache
+C:\Code\HideAndSeek\HideAndSeek\obj\Debug\net7.0\ref\HideAndSeek.dll
