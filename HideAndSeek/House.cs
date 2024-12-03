@@ -109,8 +109,6 @@ namespace HideAndSeek
 			return (findLocation == null? Entry : findLocation);			
 		}
 
-
-
 		/// <summary>
 		/// Gets a random exit from the location
 		/// </summary>
@@ -125,9 +123,15 @@ namespace HideAndSeek
 			return exits[randomIndex].Value;
 		}
 
-		public static int ClearHidingPlaces()
+		public static void ClearHidingPlaces()
 		{
-
+			foreach(var location in locations)
+			{
+				if(location is LocationWithHidingPlace locationwithhidingplace)
+				{
+					locationwithhidingplace.CheckHidingPlace();
+				}
+			}
 		}
 	}
 }

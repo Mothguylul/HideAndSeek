@@ -98,7 +98,6 @@ public class HouseTests
 
 
 	[TestMethod]
-	[Ignore]
 	public void TestClearHidingPlaces()
 	{
 		var garage = House.GetLocationByName("Garage") as LocationWithHidingPlace;
