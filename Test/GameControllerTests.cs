@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using HideAndSeek;
 using System;
+using System.Linq;
 
 namespace Test;
 
@@ -44,9 +45,9 @@ public class GameControllerTests
 	public void TestStatus()
 	{
 		Assert.AreEqual("You are in the Entry. You see the following Exits: " +
-		Environment.NewLine +
 		Environment.NewLine + "- Hallway" +
-        Environment.NewLine + "- Garage", gameController.Status);
+        Environment.NewLine + "- Garage" + Environment.NewLine
+		+ Environment.NewLine + "You have found 0 of 5 opponents:", gameController.Status);
 	}
 
 	[TestMethod]
@@ -58,17 +59,128 @@ public class GameControllerTests
 		Assert.AreEqual("There's no exit in that direction", gameController.ParseInput("Up"));
 		Assert.AreEqual(initialStatus,gameController.Status);
 		Assert.AreEqual("Moving East", gameController.ParseInput("East"));
-		Assert.AreEqual("You are in the Hallway. You see the following Exits: " +
-		Environment.NewLine +
-		Environment.NewLine + "- Bathroom" +
-		Environment.NewLine + "- Living Room" +
-		Environment.NewLine + "- Entry" +
-		Environment.NewLine + "- Kitchen" +
-		Environment.NewLine + "- Landing", gameController.Status);
+		Assert.AreEqual("You are in the Hallway. You see the following exits: " +
+		Environment.NewLine + " - Bathroom" +
+		Environment.NewLine + " - Living Room" +
+		Environment.NewLine + " - Entry" +
+		Environment.NewLine + " - Kitchen" +
+		Environment.NewLine + " - Landing" + Environment.NewLine + 
+		Environment.NewLine + "You have found 0 of 5 opponents: ", gameController.Status);
 		Assert.AreEqual("Moving South", gameController.ParseInput("South"));
 		Assert.AreEqual("You are in the Living Room. You see the following Exits: " +
 		Environment.NewLine +
 		Environment.NewLine + "- Hallway", gameController.Status);
 
+	}
+
+	[TestMethod]
+	public void TestGame()
+	{
+		Assert.IsFalse(gameController.GameOver);
+		// Clear the hiding places and hide the opponents in specific rooms
+		House.ClearHidingPlaces();
+		var joe = gameController.Opponents.ToList()[0];
+		(House.GetLocationByName("Garage") as LocationWithHidingPlace).Hide(joe);
+		var bob = gameController.Opponents.ToList()[1];
+		(House.GetLocationByName("Kitchen") as LocationWithHidingPlace).Hide(bob);
+		var ana = gameController.Opponents.ToList()[2];
+		(House.GetLocationByName("Attic") as LocationWithHidingPlace).Hide(ana);
+		var owen = gameController.Opponents.ToList()[3];
+		(House.GetLocationByName("Attic") as LocationWithHidingPlace).Hide(owen);
+		var jimmy = gameController.Opponents.ToList()[4];
+		(House.GetLocationByName("Kitchen") as LocationWithHidingPlace).Hide(jimmy);
+		// Check the Entry -- there are no players hiding there
+		Assert.AreEqual(1, gameController.MoveNumber);
+		Assert.AreEqual("There is no hiding place in the Entry",
+		gameController.ParseInput("Check"));
+		Assert.AreEqual(2, gameController.MoveNumber);
+		// Move to the Garage
+		gameController.ParseInput("Out");
+		Assert.AreEqual(3, gameController.MoveNumber);
+		// We hid Joe in the Garage, so validate ParseInput's return value and the properties
+		Assert.AreEqual("You found 1 opponent hiding behind the car",
+		gameController.ParseInput("check"));
+	}
+
+	[TestMethod]
+	public void TestParseCheck() 
+	{
+		Assert.IsFalse(gameController.GameOver);
+		// Clear the hiding places and hide the opponents in specific rooms
+		House.ClearHidingPlaces();
+		var joe = gameController.Opponents.ToList()[0];
+		(House.GetLocationByName("Garage") as LocationWithHidingPlace).Hide(joe);
+		var bob = gameController.Opponents.ToList()[1];
+		(House.GetLocationByName("Kitchen") as LocationWithHidingPlace).Hide(bob);
+		var ana = gameController.Opponents.ToList()[2];
+		(House.GetLocationByName("Attic") as LocationWithHidingPlace).Hide(ana);
+		var owen = gameController.Opponents.ToList()[3];
+		(House.GetLocationByName("Attic") as LocationWithHidingPlace).Hide(owen);
+		var jimmy = gameController.Opponents.ToList()[4];
+		(House.GetLocationByName("Kitchen") as LocationWithHidingPlace).Hide(jimmy);
+		// Check the Entry -- there are no players hiding there
+		Assert.AreEqual(1, gameController.MoveNumber);
+		Assert.AreEqual("There is no hiding place in the Entry",
+		gameController.ParseInput("Check"));
+		Assert.AreEqual(2, gameController.MoveNumber);
+		// Move to the Garage
+		gameController.ParseInput("Out");
+		Assert.AreEqual(3, gameController.MoveNumber);
+		// We hid Joe in the Garage, so validate ParseInput's return value and the properties
+		Assert.AreEqual("You found 1 opponent hiding behind the car",
+		gameController.ParseInput("check"));
+		Assert.AreEqual("You are in the Garage. You see the following exits:" +
+		Environment.NewLine + " - Entry" +
+		Environment.NewLine + "Someone could hide behind the car" +
+		Environment.NewLine + "You have found 1 of 5 opponents: Joe",
+		gameController.Status);
+		Assert.AreEqual("Which direction do you want to go (or type 'check'): ",
+		gameController.Prompt);
+		Assert.AreEqual(4, gameController.MoveNumber);
+		// Move to the bathroom, where nobody is hiding
+		gameController.ParseInput("In");
+		gameController.ParseInput("East");
+		gameController.ParseInput("North");
+		// Check the Bathroom to make sure nobody is hiding there
+		Assert.AreEqual("Nobody was hiding behind the door", gameController.ParseInput("check"));
+		Assert.AreEqual(8, gameController.MoveNumber);
+		// Check the Bathroom to make sure nobody is hiding there
+		gameController.ParseInput("South");
+		gameController.ParseInput("Northwest");
+		Assert.AreEqual("You found 2 opponents hiding next to the stove",
+		gameController.ParseInput("check"));
+		Assert.AreEqual("You are in the Kitchen. You see the following exits:" +
+		Environment.NewLine + " - Hallway" +
+		Environment.NewLine + "Someone could hide next to the stove" +
+		Environment.NewLine + "You have found 3 of 5 opponents: Joe, Bob, Jimmy",
+		gameController.Status);
+		Assert.AreEqual("Which direction do you want to go (or type 'check'): ",
+		gameController.Prompt);
+		Assert.AreEqual(11, gameController.MoveNumber);
+		Assert.IsFalse(gameController.GameOver);
+		// Head up to the Landing, then check the Pantry (nobody's hiding there)
+		gameController.ParseInput("Southeast");
+		gameController.ParseInput("Up");
+		Assert.AreEqual(13, gameController.MoveNumber);
+		gameController.ParseInput("South");
+		Assert.AreEqual("Nobody was hiding inside a cabinet",
+		gameController.ParseInput("check"));
+		Assert.AreEqual(15, gameController.MoveNumber);
+		// Check the Attic to find the last two opponents, make sure the game is over
+		gameController.ParseInput("North");
+		gameController.ParseInput("Up");
+		Assert.AreEqual(17, gameController.MoveNumber);
+		Assert.AreEqual("You found 2 opponents hiding in a trunk",
+		gameController.ParseInput("check"));
+		Assert.AreEqual("You are in the Attic. You see the following exits:" +
+		Environment.NewLine + " - Landing" +
+		Environment.NewLine + "Someone could hide in a trunk" +
+		Environment.NewLine +
+		"You have found 5 of 5 opponents: Joe, Bob, Jimmy, Ana, Owen",
+		gameController.Status);
+		Assert.AreEqual("Which direction do you want to go (or type 'check'): ",
+		gameController.Prompt);
+		Assert.AreEqual(18, gameController.MoveNumber);
+		Assert.IsTrue(gameController.GameOver);
 	}
 }

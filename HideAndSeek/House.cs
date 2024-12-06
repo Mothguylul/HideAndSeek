@@ -57,7 +57,7 @@ namespace HideAndSeek
 			SecondBathroom = new LocationWithHidingPlace("Second Bathroom", "in the shower");
 			MasterBathroom = new LocationWithHidingPlace("Master Bath", "in the bathtub");
 			MasterBedroom = new LocationWithHidingPlace("Master Bedroom", "in the closet");
-			Attic = new LocationWithHidingPlace("Attic", "in the trunk");
+			Attic = new LocationWithHidingPlace("Attic", "in a trunk");
 
 			Entry.AddExit(Direction.Out, Garage);
 			Entry.AddExit(Direction.East, Hallway);
