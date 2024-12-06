@@ -42,9 +42,9 @@ namespace HideAndSeek
 		/// Returns a sequence of descriptions of the exits, sorted by direction
 		/// </summary>
 		public IEnumerable<string> ExitList => Exits
-	     .OrderBy(kvp => (int)kvp.Key) 
-         .OrderBy(kvp => Math.Abs((int)kvp.Key)) 
-         .Select(kvp => kvp.Value.Name); 
+		 .OrderBy(kvp => (int)kvp.Key)
+		 .OrderBy(kvp => Math.Abs((int)kvp.Key))
+		 .Select(kvp => $"the {kvp.Value.Name} is to the {DescribeDirection(kvp.Key)}");
 		/// <summary>
 		/// Adds an exit to this location
 		/// </summary>
